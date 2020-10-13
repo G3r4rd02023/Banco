@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -133,9 +141,59 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\API\ClientesAPIController.cs" />
+    <Compile Include="Controllers\API\CuentasController.cs" />
+    <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\CuentasController.cs" />
+    <Compile Include="Controllers\EstadosController.cs" />
+    <Compile Include="Controllers\GenerosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TipoCuentasController.cs" />
+    <Compile Include="Controllers\TipoMonedasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\Banco.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Banco.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\Banco.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\Banco.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Banco.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\Cliente.cs">
+      <DependentUpon>Banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\Cuenta.cs">
+      <DependentUpon>Banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\Estado.cs">
+      <DependentUpon>Banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\Genero.cs">
+      <DependentUpon>Banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\sysdiagrams.cs">
+      <DependentUpon>Banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\TipoCuenta.cs">
+      <DependentUpon>Banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\TipoMoneda.cs">
+      <DependentUpon>Banco.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -148,8 +206,26 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Data\Banco.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Banco.Context.cs</LastGenOutput>
+      <DependentUpon>Banco.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Data\Banco.edmx.sql" />
+    <Content Include="Models\Data\Banco.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Banco.edmx</DependentUpon>
+      <LastGenOutput>Banco.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\Data\Banco.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Banco.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Data\Banco.edmx.diagram">
+      <DependentUpon>Banco.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -175,10 +251,39 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Estados\Create.cshtml" />
+    <Content Include="Views\Estados\Delete.cshtml" />
+    <Content Include="Views\Estados\Details.cshtml" />
+    <Content Include="Views\Estados\Edit.cshtml" />
+    <Content Include="Views\Estados\Index.cshtml" />
+    <Content Include="Views\Generos\Create.cshtml" />
+    <Content Include="Views\Generos\Delete.cshtml" />
+    <Content Include="Views\Generos\Details.cshtml" />
+    <Content Include="Views\Generos\Edit.cshtml" />
+    <Content Include="Views\Generos\Index.cshtml" />
+    <Content Include="Views\TipoCuentas\Create.cshtml" />
+    <Content Include="Views\TipoCuentas\Delete.cshtml" />
+    <Content Include="Views\TipoCuentas\Details.cshtml" />
+    <Content Include="Views\TipoCuentas\Edit.cshtml" />
+    <Content Include="Views\TipoCuentas\Index.cshtml" />
+    <Content Include="Views\TipoMonedas\Create.cshtml" />
+    <Content Include="Views\TipoMonedas\Delete.cshtml" />
+    <Content Include="Views\TipoMonedas\Details.cshtml" />
+    <Content Include="Views\TipoMonedas\Edit.cshtml" />
+    <Content Include="Views\TipoMonedas\Index.cshtml" />
+    <Content Include="Views\Clientes\Create.cshtml" />
+    <Content Include="Views\Clientes\Delete.cshtml" />
+    <Content Include="Views\Clientes\Details.cshtml" />
+    <Content Include="Views\Clientes\Edit.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Cuentas\Create.cshtml" />
+    <Content Include="Views\Cuentas\Delete.cshtml" />
+    <Content Include="Views\Cuentas\Details.cshtml" />
+    <Content Include="Views\Cuentas\Edit.cshtml" />
+    <Content Include="Views\Cuentas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -192,6 +297,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
